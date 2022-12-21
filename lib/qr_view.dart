@@ -21,13 +21,22 @@ class _ScanQrPageState extends State<ScanQrPage> {
     controller.scannedDataStream.listen((scanData) {
       setState(() {
         result = scanData;
-        debugPrint("*****************");
-        debugPrint(result!.code);
-        if (result!.code!.length == 10) {
-          var url = Uri.parse("tel:${result!.code}");
+        String? _result=result!.code;
+        if(_result!.contains("tel:")){
+          _result=_result.substring(4);
+        }
+        debugPrint("*******************************************");
+        debugPrint("*******************************************");
+        debugPrint("*******************************************");
+        debugPrint(_result);
+        debugPrint("*******************************************");
+        debugPrint("*******************************************");
+        debugPrint("*******************************************");
+        if (_result.length >= 10 && _result.length<=13) {
+          var url = Uri.parse("tel:$_result");
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
               duration: Duration(seconds: 5),
-              content: Text("Calling ${result!.code}")));
+              content: Text("Calling $_result")));
 
           Future.delayed(Duration(seconds: 5), () {
             // Do something
