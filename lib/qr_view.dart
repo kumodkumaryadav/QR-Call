@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
+import 'package:torch_light/torch_light.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ScanQrPage extends StatefulWidget {
@@ -21,6 +22,7 @@ class _ScanQrPageState extends State<ScanQrPage> {
     controller.scannedDataStream.listen((scanData) {
       setState(() {
         result = scanData;
+        // ignore: no_leading_underscores_for_local_identifiers
         String? _result=result!.code;
         if(_result!.contains("tel:")){
           _result=_result.substring(4);
@@ -35,18 +37,18 @@ class _ScanQrPageState extends State<ScanQrPage> {
         if (_result.length >= 10 && _result.length<=13) {
           var url = Uri.parse("tel:$_result");
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-              duration: Duration(seconds: 5),
-              content: Text("Calling $_result")));
+              duration: const Duration(seconds: 3),
+              content: Center(child: Text("Calling $_result"))));
 
-          Future.delayed(Duration(seconds: 5), () {
+          Future.delayed(const Duration(seconds: 3), () {
             // Do something
             launchUrl(url);
           });
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
+              const SnackBar(
                 duration: Duration(seconds: 5),
-                content: Text("Invalid QR please try again")));
+                content: Center(child: Text("This QR don't have any Valid Calling Number!"))));
         }
         Navigator.pop(context);
       });
@@ -89,11 +91,22 @@ class _ScanQrPageState extends State<ScanQrPage> {
             cutOutSize: 250,
           ),
         ),
-        Positioned(
-            bottom: 100,
-            left: 200,
-            child: IconButton(
-                iconSize: 24, onPressed: () {}, icon: const Icon(Icons.camera)))
+        // Positioned(
+        //     bottom: 200,
+        //     right: 150,
+        //     child: Row(
+        //       children: [
+                
+        //          IconButton(onPressed: () {
+        //         TorchLight.disableTorch();
+                  
+        //         }, icon: Icon(Icons.flashlight_off,color: Colors.white,)),
+        //         IconButton(onPressed: () {
+        //         TorchLight.enableTorch();
+                  
+        //         }, icon: Icon(Icons.flashlight_on, color: Colors.white,)),
+        //       ],
+        //     ))
       ]),
     );
   }

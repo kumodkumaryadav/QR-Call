@@ -5,6 +5,7 @@ import 'package:qr_call/qr_view.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 void main() {
+  
   runApp(const MyApp());
 }
 
@@ -53,6 +54,8 @@ class _BodyContentState extends State<BodyContent> {
             
       
       QrImage(
+        embeddedImageStyle: QrEmbeddedImageStyle(size: const Size(80, 40)),
+        embeddedImage: const AssetImage("assets/qr_call.png"),
         // gapless: false,
         size: 240,
         backgroundColor: Colors.white,
@@ -103,7 +106,7 @@ class _BodyContentState extends State<BodyContent> {
                 Navigator.push(context, MaterialPageRoute(builder: (context) => const ScanQrPage(),));
 
             
-          }), child: Text("Scan to Call",style: TextStyle(color: Colors.black),))
+          }), child: const Text("Scan to Call",style: TextStyle(color: Colors.black),))
         ],
       ),
      
